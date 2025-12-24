@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hospital | AI Triage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="landing-body">
+    <!-- Practo-style Header -->
+    <header class="practo-header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <a href="/" class="practo-logo">
+                    SmartHospital
+                </a>
+            </div>
+
+            <!-- Main Nav Links (Middle) -->
+            <nav class="practo-nav">
+                <a href="/doctors" class="p-nav-link">Find Doctors</a>
+                <a href="/consult" class="p-nav-link">Video Consult</a>
+                <a href="/surgeries" class="p-nav-link">Surgeries</a>
+                <a href="/labs" class="p-nav-link">Book Tests</a>
+                <a href="/prescription" class="p-nav-link">Medicines</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="dropdown">
+                    <button class="dropbtn">For Corporates <i class="fas fa-chevron-down"></i></button>
+                    <!-- Dropdown content would go here -->
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">For Providers <i class="fas fa-chevron-down"></i></button>
+                </div>
+                <a href="/login" class="btn-login">Login / Signup</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chatbot Widget -->
+    <div id="chat-widget">
+        <button id="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="chat-window" class="hidden">
+            <div class="chat-header">
+                <span>AI Health Assistant</span>
+                <button onclick="toggleChat()"
+                    style="background:none; border:none; color:white; cursor:pointer;">×</button>
+            </div>
+            <div id="chat-messages">
+                <div class="msg ai">Hello! I'm your virtual health assistant. How can I help you today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about symptoms...">
+                <button onclick="sendChat()" id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

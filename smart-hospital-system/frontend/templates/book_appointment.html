@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <a href="/doctors" class="back-link"><i class="fas fa-arrow-left"></i> Back to Doctors</a>
+    <h1>Confirm Booking</h1>
+</div>
+
+<div class="booking-container"
+    style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto;">
+
+    <!-- Left: Doctor Info & Slots -->
+    <div class="card">
+        <div
+            style="display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <div
+                style="width: 80px; height: 80px; background: #e0e7ff; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user-md fa-3x" style="color: #4f46e5;"></i>
+            </div>
+            <div>
+                <h2>{{ doctor.name }}</h2>
+                <p style="color: #64748b;">{{ doctor.spec }}</p>
+                <div style="font-weight: 600; color: #0284c7;">{{ doctor.fee }} Consultation Fee</div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">Select Time Slot</h3>
+        <div class="slots-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            {% for slot in slots %}
+            <div class="slot-item" onclick="selectSlot(this, '{{ slot }}')"
+                style="padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s;">
+                {{ slot }}
+            </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" id="selectedSlot">
+        <input type="hidden" id="doctorId" value="{{ doctor.id }}">
+    </div>
+
+    <!-- Right: Patient Details -->
+    <div class="card">
+        <h3 style="margin-bottom: 1rem;">Patient Details</h3>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #475569;">Patient Name</label>
+                <input type="text" id="pName" class="form-control" required
+                    style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #475569;">Age</label>
+                <input type="number" id="pAge" class="form-control" required
+                    style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #475569;">Symptoms (for AI Triage)</label>
+                <textarea id="pSymptoms" rows="3" class="form-control" placeholder="Describe symptoms..."
+                    style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 6px;"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #475569;">Severity (1-10)</label>
+                <input type="range" id="pSeverity" min="1" max="10" value="5" style="width: 100%;">
+                <span id="sevValue">5</span>
+            </div>
+
+            <button type="submit" class="btn-primary"
+                style="width: 100%; padding: 1rem; font-size: 1.1rem; margin-top: 1rem;">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('pSeverity').oninput = function () {
+        document.getElementById('sevValue').innerText = this.value;
+    }
+
+    function selectSlot(el, slot) {
+        document.querySelectorAll('.slot-item').forEach(d => {
+            d.style.background = 'transparent';
+            d.style.color = 'inherit';
+            d.style.borderColor = '#cbd5e1';
+        });
+        el.style.background = '#3b82f6';
+        el.style.color = 'white';
+        el.style.borderColor = '#3b82f6';
+        document.getElementById('selectedSlot').value = slot;
+    }
+
+    async function submitBooking(e) {
+        e.preventDefault();
+        const slot = document.getElementById('selectedSlot').value;
+        if (!slot) {
+            alert("Please select a time slot.");
+            return;
+        }
+
+        const data = {
+            name: document.getElementById('pName').value,
+            age: document.getElementById('pAge').value,
+            severity: document.getElementById('pSeverity').value,
+            symptoms: document.getElementById('pSymptoms').value,
+            doctor_id: document.getElementById('doctorId').value,
+            slot: slot
+        };
+
+        const btn = e.target.querySelector('button');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/appointments/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+
+            if (res.ok) {
+                // Determine destination based on risk
+                if (result.ai_analysis && result.ai_analysis.risk_level === 'High') {
+                    alert("AI Triage Alert: High Risk detected. Please proceed to emergency.");
+                }
+                window.location.href = "/appointments/my";
+            } else {
+                alert("Error booking appointment");
+                btn.innerHTML = 'Confirm Booking';
+                btn.disabled = false;
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error");
+        }
+    }
+</script>
+{% endblock %}

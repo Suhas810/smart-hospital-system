@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header" style="margin-bottom: 2rem;">
+    <h1 class="page-title" style="color: #dc2626;">Emergency Command Center</h1>
+    <p style="color: #64748b;">Live Pre-Hospital & Critical Care Intelligence</p>
+</div>
+
+<!-- Stats Row -->
+<div class="grid-stats" style="grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="card stat-card"
+        style="border-left: 4px solid #dc2626; padding: 1.5rem; background: white; border-radius: 8px;">
+        <h3 style="color: #64748b; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase;">Critical Cases
+        </h3>
+        <div class="stat-value danger" style="font-size: 2rem; font-weight: 700; color: #dc2626;">5</div>
+        <div style="font-size: 0.8rem; color: #dc2626;">Active</div>
+    </div>
+
+    <div class="card stat-card"
+        style="border-left: 4px solid #f59e0b; padding: 1.5rem; background: white; border-radius: 8px;">
+        <h3 style="color: #64748b; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase;">Emergency Beds
+        </h3>
+        <div class="stat-value warning" id="stat-beds" style="font-size: 2rem; font-weight: 700; color: #f59e0b;">--
+        </div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Available</div>
+    </div>
+
+    <div class="card stat-card"
+        style="border-left: 4px solid #2563eb; padding: 1.5rem; background: white; border-radius: 8px;">
+        <h3 style="color: #64748b; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase;">Ambulances</h3>
+        <div class="stat-value primary" id="stat-amb" style="font-size: 2rem; font-weight: 700; color: #2563eb;">--
+        </div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">On Duty</div>
+    </div>
+
+    <div class="card stat-card"
+        style="border-left: 4px solid #10b981; padding: 1.5rem; background: white; border-radius: 8px;">
+        <h3 style="color: #64748b; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase;">Avg Response
+        </h3>
+        <div class="stat-value success" style="font-size: 2rem; font-weight: 700; color: #10b981;">12m</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">ETA</div>
+    </div>
+</div>
+
+<div class="grid-main" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <!-- Map / Ambulance Status -->
+    <div class="card" style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0;">
+        <h3 style="margin: 0 0 1.5rem 0; color: #1e293b;">Live Ambulance Tracking (Sector Map)</h3>
+
+        <!-- Leaflet Map Container -->
+        <div id="map" style="height: 300px; width: 100%; border-radius: 8px; margin-bottom: 1rem; z-index: 1;"></div>
+
+        <div class="ambulance-list" id="amb-list"
+            style="display: flex; flex-direction: column; gap: 1rem; max-height: 300px; overflow-y: auto;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Dispatch Panel -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Quick Dispatch -->
+        <div class="card"
+            style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0; height: fit-content;">
+            <h3 style="margin: 0 0 1rem 0; color: #1e293b;">Quick Dispatch</h3>
+            <div
+                style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #475569;">Incident
+                    Location</label>
+                <input type="text" id="dispatch-loc" placeholder="Enter sector or area..."
+                    style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 1rem;">
+                <button onclick="dispatchAmbulance()"
+                    style="width: 100%; background: #dc2626; color: white; border: none; padding: 0.8rem; border-radius: 4px; font-weight: 600; cursor: pointer;">
+                    <i class="fas fa-ambulance"></i> DISPATCH NOW
+                </button>
+            </div>
+            <div id="dispatch-result"
+                style="display: none; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px;">
+                <h4 style="margin: 0; color: #166534; font-size: 0.9rem;">Dispatch Confirmed</h4>
+                <p id="dispatch-msg" style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #15803d;"></p>
+            </div>
+        </div>
+
+        <!-- AI Triage Simulator -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0;">
+            <h3 style="margin: 0 0 1rem 0; color: #1e293b;">AI Priority Triage</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem;">
+                <input type="number" id="t-severity" placeholder="Severity (1-10)" min="1" max="10"
+                    style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                <input type="number" id="t-eta" placeholder="ETA (mins)"
+                    style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </div>
+            <button onclick="checkPriority()"
+                style="width: 100%; background: #28328c; color: white; border: none; padding: 0.8rem; border-radius: 4px; font-weight: 600; cursor: pointer; margin-bottom: 1rem;">
+                Check Priority
+            </button>
+            <div id="priority-result"
+                style="text-align: center; font-weight: 700; font-size: 1.2rem; min-height: 1.5rem;"></div>
+        </div>
+
+        <!-- Resource Quick View -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0;">
+            <h3 style="margin: 0 0 1rem 0; color: #1e293b;">Critical Supplies</h3>
+            <div
+                style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 8px;">
+                <span style="color: #64748b;">Oxygen Cylinders</span>
+                <span style="font-weight: 600; color: #0f172a;" id="mini-oxygen">--</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #64748b;">Ventilators</span>
+                <span style="font-weight: 600; color: #0f172a;" id="mini-vents">--</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    let map;
+    let markers = {};
+
+    document.addEventListener("DOMContentLoaded", () => {
+        initMap();
+        fetchStatus();
+        setInterval(fetchStatus, 5000);
+    });
+
+    function initMap() {
+        // Center on Bangalore (Mock Base)
+        map = L.map('map').setView([12.9716, 77.5946], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+    }
+
+    async function fetchStatus() {
+        try {
+            const res = await fetch('/emergency/status');
+            const data = await res.json();
+
+            document.getElementById('stat-beds').innerText = data.emergency_beds;
+            document.getElementById('stat-amb').innerText = data.ambulances.length;
+            document.getElementById('mini-oxygen').innerText = data.oxygen;
+            document.getElementById('mini-vents').innerText = data.ventilators;
+
+            const list = document.getElementById('amb-list');
+            list.innerHTML = '';
+
+            data.ambulances.forEach(amb => {
+                // Update Badge Logic
+                let statusColor = amb.status === 'Available' ? '#10b981' : (amb.status === 'Busy' ? '#dc2626' : '#f59e0b');
+
+                // Map Marker Logic
+                if (amb.lat && amb.lng) {
+                    if (markers[amb.id]) {
+                        markers[amb.id].setLatLng([amb.lat, amb.lng]);
+                    } else {
+                        const marker = L.marker([amb.lat, amb.lng]).addTo(map)
+                            .bindPopup(`<b>${amb.id} (${amb.type})</b><br>Status: ${amb.status}`);
+                        markers[amb.id] = marker;
+                    }
+                }
+
+                let html = `
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: white; padding: 10px; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                            <i class="fas fa-ambulance" style="color: ${statusColor}; font-size: 1.2rem;"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: #1e293b;">${amb.id} <span style="font-size: 0.8rem; font-weight: 400; color: #64748b;">(${amb.type})</span></div>
+                            <div style="font-size: 0.85rem; color: #64748b;">Loc: ${amb.location}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <span style="background: ${statusColor}20; color: ${statusColor}; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">${amb.status}</span>
+                    </div>
+                </div>`;
+                list.innerHTML += html;
+            });
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function dispatchAmbulance() {
+        const loc = document.getElementById('dispatch-loc').value;
+        if (!loc) return alert("Please enter a location");
+
+        try {
+            const res = await fetch('/emergency/dispatch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ location: loc })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                document.getElementById('dispatch-result').style.display = 'block';
+                document.getElementById('dispatch-msg').innerText = data.message;
+                fetchStatus(); // Refresh immediately
+            } else {
+                alert(data.error);
+            }
+        } catch (e) {
+            console.error(e);
+            alert("Dispatch failed");
+        }
+    }
+
+    async function checkPriority() {
+        const severity = document.getElementById('t-severity').value;
+        const eta = document.getElementById('t-eta').value;
+
+        if (!severity || !eta) return alert("Enter both values");
+
+        const res = await fetch('/emergency/prioritize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ severity: severity, eta: eta })
+        });
+        const data = await res.json();
+
+        const el = document.getElementById('priority-result');
+        el.innerText = `Priority Level: ${data.priority}`;
+        el.style.color = data.priority === 'RED' ? '#dc2626' : (data.priority === 'YELLOW' ? '#ca8a04' : '#166534');
+    }
+</script>
+{% endblock %}

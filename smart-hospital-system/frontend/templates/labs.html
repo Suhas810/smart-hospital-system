@@ -1,0 +1,72 @@
+{% extends "landing_layout.html" %}
+
+{% block content %}
+<div class="practo-page-container" style="background: #f0f0f5; min-height: calc(100vh - 70px); padding: 2rem 0;">
+    <div class="container" style="max-width: 1000px;">
+        <!-- Header -->
+        <div style="margin-bottom: 2rem;">
+            <h1 style="color: #2d2d32; font-size: 1.5rem; font-weight: 700;">Lab Tests & Health Checkups</h1>
+            <p style="color: #787887; font-size: 0.9rem;">Home > Lab Tests</p>
+        </div>
+
+        <div class="grid-stats" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+            {% for pkg in packages %}
+            <div class="card stat-card"
+                style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 1.5rem; transition: transform 0.2s;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="color: #2d2d32; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 600;">{{
+                            pkg.name }}</h3>
+                        <span
+                            style="background: #f0fdf4; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; color: #15803d; font-weight: 500;">Includes
+                            {{ pkg.tests }} Tests</span>
+                    </div>
+                    <div
+                        style="width: 50px; height: 50px; background: {{ pkg.color }}20; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas {{ pkg.img }}" style="color: {{ pkg.icon_color }}; font-size: 1.2rem;"></i>
+                    </div>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding-top: 1rem; border-top: 1px dashed #e0e0e0;">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: #2d2d32;">{{ pkg.price }}</div>
+                    <button onclick="alert('Booking functionality coming soon!')"
+                        style="background: #28328c; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">Book
+                        Now</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Trust Markers -->
+        <div class="card"
+            style="margin-top: 3rem; background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem;">
+            <h3 style="color: #2d2d32; font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem;">Why choose us?</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div
+                        style="width: 60px; height: 60px; background: #e0f2fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <i class="fas fa-certificate fa-lg" style="color: #0284c7;"></i>
+                    </div>
+                    <p style="font-weight: 500; color: #2d2d32;">NABL Accredited Labs</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div
+                        style="width: 60px; height: 60px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <i class="fas fa-home fa-lg" style="color: #15803d;"></i>
+                    </div>
+                    <p style="font-weight: 500; color: #2d2d32;">Home Sample Collection</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div
+                        style="width: 60px; height: 60px; background: #fff7ed; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <i class="fas fa-file-medical-alt fa-lg" style="color: #c2410c;"></i>
+                    </div>
+                    <p style="font-weight: 500; color: #2d2d32;">Digital Reports in 24hrs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

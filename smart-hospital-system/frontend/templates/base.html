@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hospital | AI Triage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body style="background: #f1f5f9;">
+    <nav class="sidebar">
+        <div class="logo"
+            style="margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem;">
+            <i class="fas fa-heartbeat fa-lg" style="color: #28328c;"></i>
+            SmartHospital
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+            <a href="/dashboard" class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
+                <i class="fas fa-columns" style="width: 20px;"></i> Dashboard
+            </a>
+            <a href="/appointments/my" class="nav-item {% if request.path == '/appointments/my' %}active{% endif %}">
+                <i class="fas fa-calendar-check" style="width: 20px;"></i> My Appointments
+            </a>
+            <a href="/doctors" class="nav-item">
+                <i class="fas fa-user-md" style="width: 20px;"></i> Find Doctors
+            </a>
+            <a href="/resources" class="nav-item">
+                <i class="fas fa-chart-line" style="width: 20px;"></i> Live Resources
+            </a>
+            <a href="/prescription" class="nav-item">
+                <i class="fas fa-pills" style="width: 20px;"></i> Medicines
+            </a>
+            <a href="/emergency/dashboard" class="nav-item"
+                style="color: #dc2626; background: #fef2f2; font-weight: 500;">
+                <i class="fas fa-ambulance" style="width: 20px;"></i> Emergency
+            </a>
+        </div>
+
+        <div style="margin-top:auto; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+            <a href="/" class="nav-item">
+                <i class="fas fa-home" style="width: 20px;"></i> Home Page
+            </a>
+            <a href="/login" class="nav-item" style="color: #ef4444;">
+                <i class="fas fa-sign-out-alt" style="width: 20px;"></i> Logout
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content" style="padding: 2rem;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chatbot Widget -->
+    <div id="chat-widget">
+        <button id="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="chat-window" class="hidden">
+            <div class="chat-header">
+                <span>AI Health Assistant</span>
+                <button onclick="toggleChat()"
+                    style="background:none; border:none; color:white; cursor:pointer;">×</button>
+            </div>
+            <div id="chat-messages">
+                <div class="msg ai">Hello! I'm your virtual health assistant. How can I help you today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about symptoms...">
+                <button onclick="sendChat()" id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

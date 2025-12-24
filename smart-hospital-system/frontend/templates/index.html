@@ -1,0 +1,231 @@
+{% extends "landing_layout.html" %}
+
+{% block content %}
+<!-- Practo-style Hero Section -->
+<section class="practo-hero">
+  <div class="container">
+    <h1 class="hero-title">Your home for health</h1>
+
+    <div class="hero-search-wrapper">
+      <div class="search-container">
+        <div class="search-box-location">
+          <i class="fas fa-map-marker-alt search-icon"></i>
+          <input type="text" class="search-input" placeholder="Bangalore" value="Bangalore">
+        </div>
+        <div class="search-box-query">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search doctors, clinics, hospitals, etc.">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Cards Grid -->
+<div class="container" style="position: relative; z-index: 10;">
+  <div class="services-grid-practo">
+    <a href="/consult" class="p-card">
+      <div class="p-card-img" style="background: #afcfed;">
+        <img
+          src="https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_instant_video_consulation.png"
+          alt="Video Consult">
+      </div>
+      <div class="p-card-content">
+        <h3 class="p-card-title">Instant Video Consultation</h3>
+        <p class="p-card-desc">Connect within 60 secs</p>
+      </div>
+    </a>
+
+    <a href="/doctors" class="p-card">
+      <div class="p-card-img" style="background: #98dafc;">
+        <img src="https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png"
+          alt="Find Doctors">
+      </div>
+      <div class="p-card-content">
+        <h3 class="p-card-title">Find Doctors Near You</h3>
+        <p class="p-card-desc">Confirmed appointments</p>
+      </div>
+    </a>
+
+    <a href="/prescription" class="p-card">
+      <div class="p-card-img" style="background: #eeb178;">
+        <img src="https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_medicines.png"
+          alt="Medicines">
+      </div>
+      <div class="p-card-content">
+        <h3 class="p-card-title">Medicines</h3>
+        <p class="p-card-desc">Essentials at your doorstep</p>
+      </div>
+    </a>
+
+    <a href="/labs" class="p-card">
+      <div class="p-card-img" style="background: #93b9d9;">
+        <img src="https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_lab_tests.png"
+          alt="Lab Tests">
+      </div>
+      <div class="p-card-content">
+        <h3 class="p-card-title">Lab Tests</h3>
+        <p class="p-card-desc">Sample pickup at your home</p>
+      </div>
+    </a>
+
+    <a href="/surgeries" class="p-card">
+      <div class="p-card-img" style="background: #d6f2f2;">
+        <img src="https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_surgeries.png"
+          alt="Surgeries">
+      </div>
+      <div class="p-card-content">
+        <h3 class="p-card-title">Surgeries</h3>
+        <p class="p-card-desc">Safe and trusted surgery centers</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Consult Top Doctors Section -->
+<section class="consult-section">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Consult top doctors online for any health concern</h2>
+      <span class="section-subtitle">Private online consultations with verified doctors in all specialists</span>
+    </div>
+    <a href="/consult" class="btn-view-all">View All Specialities</a>
+  </div>
+
+  <div class="consult-grid">
+    <a href="#" class="consult-item">
+      <div class="consult-img-wrapper"
+        style="display: flex; align-items: center; justify-content: center; background: #fff0f0;">
+        <i class="fas fa-female fa-2x" style="color: #ef4444;"></i>
+      </div>
+      <div class="consult-label">Period doubts or<br>Pregnancy</div>
+      <div class="link-consult-now">CONSULT NOW</div>
+    </a>
+
+    <a href="#" class="consult-item">
+      <div class="consult-img-wrapper"
+        style="display: flex; align-items: center; justify-content: center; background: #fff7ed;">
+        <i class="fas fa-meh-rolling-eyes fa-2x" style="color: #f97316;"></i>
+      </div>
+      <div class="consult-label">Acne, pimple or<br>skin issues</div>
+      <div class="link-consult-now">CONSULT NOW</div>
+    </a>
+
+    <a href="#" class="consult-item">
+      <div class="consult-img-wrapper"
+        style="display: flex; align-items: center; justify-content: center; background: #ecfccb;">
+        <i class="fas fa-head-side-cough fa-2x" style="color: #84cc16;"></i>
+      </div>
+      <div class="consult-label">Cold, cough or<br>fever</div>
+      <div class="link-consult-now">CONSULT NOW</div>
+    </a>
+
+    <a href="#" class="consult-item">
+      <div class="consult-img-wrapper"
+        style="display: flex; align-items: center; justify-content: center; background: #e0f2fe;">
+        <i class="fas fa-baby fa-2x" style="color: #0ea5e9;"></i>
+      </div>
+      <div class="consult-label">Child not feeling<br>well</div>
+      <div class="link-consult-now">CONSULT NOW</div>
+    </a>
+
+    <a href="#" class="consult-item">
+      <div class="consult-img-wrapper"
+        style="display: flex; align-items: center; justify-content: center; background: #f3e8ff;">
+        <i class="fas fa-brain fa-2x" style="color: #a855f7;"></i>
+      </div>
+      <div class="consult-label">Depression or<br>anxiety</div>
+      <div class="link-consult-now">CONSULT NOW</div>
+    </a>
+  </div>
+</section>
+
+<!-- Book Appointment Section -->
+<section class="clinic-section">
+  <div class="section-head">
+    <div>
+      <h2 class="section-title">Book an appointment for an in-clinic consultation</h2>
+      <span class="section-subtitle">Find experienced doctors across all specialties</span>
+    </div>
+  </div>
+
+  <div class="clinic-slider">
+    <a href="#" class="clinic-card">
+      <div class="clinic-img" style="display: flex; align-items: center; justify-content: center; background: #f0f9ff;">
+        <i class="fas fa-tooth fa-3x" style="color: #0ea5e9;"></i>
+      </div>
+      <div class="clinic-content">
+        <div class="clinic-title">Dentist</div>
+        <div class="clinic-desc">Teeth troubles? Schedule a dental checkup</div>
+      </div>
+    </a>
+
+    <a href="#" class="clinic-card">
+      <div class="clinic-img" style="display: flex; align-items: center; justify-content: center; background: #fff0f0;">
+        <i class="fas fa-baby-carriage fa-3x" style="color: #ef4444;"></i>
+      </div>
+      <div class="clinic-content">
+        <div class="clinic-title">Gynecologist/Obstetrician</div>
+        <div class="clinic-desc">Explore for women's health, pregnancy and infertility</div>
+      </div>
+    </a>
+
+    <a href="#" class="clinic-card">
+      <div class="clinic-img" style="display: flex; align-items: center; justify-content: center; background: #ecfccb;">
+        <i class="fas fa-apple-alt fa-3x" style="color: #84cc16;"></i>
+      </div>
+      <div class="clinic-content">
+        <div class="clinic-title">Dietitian/Nutritionist</div>
+        <div class="clinic-desc">Get guidance on eating right, weight management and sports nutrition</div>
+      </div>
+    </a>
+
+    <a href="#" class="clinic-card">
+      <div class="clinic-img" style="display: flex; align-items: center; justify-content: center; background: #e0e7ff;">
+        <i class="fas fa-running fa-3x" style="color: #6366f1;"></i>
+      </div>
+      <div class="clinic-content">
+        <div class="clinic-title">Physiotherapist</div>
+        <div class="clinic-desc">Pulled a muscle? Get it treated by a trained physiotherapist</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Mega Footer (Reused) -->
+<div class="mega-footer" style="margin: 0; padding: 4rem 2rem; background: #28328c;">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
+        <!-- White logo for footer -->
+        <h3 style="margin: 0; color: white; font-weight: 700; font-size: 1.5rem;">SmartHospital</h3>
+      </div>
+      <p style="color: #e0e0e0; line-height: 1.6;">Your home for health.</p>
+    </div>
+    <div class="footer-col">
+      <h4>For Patients</h4>
+      <a href="/doctors">Search for Doctors</a>
+      <a href="/labs">Health Checkups</a>
+      <a href="/consult">Video Consultations</a>
+      <a href="/resources">Hospital Resources</a>
+      <a href="/dashboard">Patient Dashboard</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Doctors</h4>
+      <a href="#">SmartHospital Profile</a>
+      <a href="#">For Clinics</a>
+      <a href="#">For Hospitals</a>
+    </div>
+    <div class="footer-col">
+      <h4>Social</h4>
+      <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    </div>
+  </div>
+  <div
+    style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: #ccc;">
+    &copy; 2024 SmartHospital.
+  </div>
+</div>
+{% endblock %}

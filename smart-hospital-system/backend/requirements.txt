@@ -1,0 +1,8 @@
+flask
+gunicorn
+google-cloud-firestore
+google-cloud-aiplatform
+google-cloud-logging
+python-dotenv
+flask-login
+reportlab

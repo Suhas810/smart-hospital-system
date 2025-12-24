@@ -1,0 +1,207 @@
+{% extends "landing_layout.html" %}
+
+{% block content %}
+<div class="practo-page-container" style="background: #f0f0f5; min-height: calc(100vh - 70px); padding: 2rem 0;">
+    <div class="container" style="max-width: 1000px;">
+        <!-- Header -->
+        <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="color: #2d2d32; font-size: 1.5rem; font-weight: 700;">Hospital Resources</h1>
+                <p style="color: #787887; font-size: 0.9rem;">Real-time availability tracker</p>
+            </div>
+            <div
+                style="display: flex; align-items: center; gap: 8px; background: #fff0f0; border: 1px solid #fecaca; color: #dc2626; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                <span
+                    style="display: block; width: 8px; height: 8px; background: #dc2626; border-radius: 50%; box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);"></span>
+                Live Updates
+            </div>
+        </div>
+
+        <!-- Detailed Resources Grid -->
+        <div class="grid-stats" style="grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- ICU Beds -->
+            <div class="card stat-card"
+                style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; color: #475569;">
+                    <i class="fas fa-bed fa-lg"></i>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">ICU Beds</h3>
+                </div>
+                <div class="stat-value primary" id="res-beds"
+                    style="font-size: 2rem; font-weight: 700; color: #28328c; margin-bottom: 0.2rem;">--</div>
+                <div class="stat-label" style="font-size: 0.85rem; color: #787887;">Available</div>
+                <div class="progress-bar-container"
+                    style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 1rem; overflow: hidden;">
+                    <div class="progress-bar" id="prog-beds"
+                        style="width: 0%; height: 100%; background: #28328c; transition: width 0.5s;"></div>
+                </div>
+            </div>
+
+            <!-- Ventilators -->
+            <div class="card stat-card"
+                style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; color: #475569;">
+                    <i class="fas fa-lungs fa-lg"></i>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Ventilators</h3>
+                </div>
+                <div class="stat-value warning" id="res-vents"
+                    style="font-size: 2rem; font-weight: 700; color: #ca8a04; margin-bottom: 0.2rem;">--</div>
+                <div class="stat-label" style="font-size: 0.85rem; color: #787887;">Available</div>
+                <div class="progress-bar-container"
+                    style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 1rem; overflow: hidden;">
+                    <div class="progress-bar warning" id="prog-vents"
+                        style="width: 0%; height: 100%; background: #ca8a04; transition: width 0.5s;"></div>
+                </div>
+            </div>
+
+            <!-- Ambulances -->
+            <div class="card stat-card"
+                style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; color: #475569;">
+                    <i class="fas fa-ambulance fa-lg"></i>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Ambulances</h3>
+                </div>
+                <div class="stat-value success" id="res-ambulances"
+                    style="font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 0.2rem;">--</div>
+                <div class="stat-label" style="font-size: 0.85rem; color: #787887;">On Standby</div>
+                <div class="progress-bar-container"
+                    style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 1rem; overflow: hidden;">
+                    <div class="progress-bar success" id="prog-ambulances"
+                        style="width: 0%; height: 100%; background: #10b981; transition: width 0.5s;"></div>
+                </div>
+            </div>
+
+            <!-- Oxygen Supply -->
+            <div class="card stat-card"
+                style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; color: #475569;">
+                    <i class="fas fa-flask fa-lg"></i>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Oxygen (Cyl)</h3>
+                </div>
+                <div class="stat-value danger" id="res-oxygen"
+                    style="font-size: 2rem; font-weight: 700; color: #dc2626; margin-bottom: 0.2rem;">--</div>
+                <div class="stat-label" style="font-size: 0.85rem; color: #787887;">In Stock</div>
+                <div class="progress-bar-container"
+                    style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 1rem; overflow: hidden;">
+                    <div class="progress-bar danger" id="prog-oxygen"
+                        style="width: 0%; height: 100%; background: #dc2626; transition: width 0.5s;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid #f0f0f5;">
+                <h3 style="color: #2d2d32; font-size: 1.1rem; font-weight: 600; margin: 0;">Resource Usage Trends</h3>
+            </div>
+            <div style="padding: 2rem;">
+                <div style="height: 350px; width: 100%;">
+                    <canvas id="resourceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchResources();
+        // Poll every 30 seconds
+        setInterval(fetchResources, 30000);
+
+        initChart();
+    });
+
+    async function fetchResources() {
+        try {
+            const res = await fetch('/resources/status');
+            const data = await res.json();
+
+            updateCard('beds', data.beds, 50);
+            updateCard('vents', data.ventilators, 20);
+            updateCard('oxygen', data.oxygen, 100);
+            updateCard('ambulances', data.ambulances, 10);
+
+        } catch (err) {
+            console.error("Failed to fetch resources", err);
+        }
+    }
+
+    function updateCard(type, value, max) {
+        document.getElementById(`res-${type}`).innerText = value;
+        const pct = Math.min((value / max) * 100, 100);
+        document.getElementById(`prog-${type}`).style.width = `${pct}%`;
+    }
+
+    // Chart Logic
+    function initChart() {
+        const ctx = document.getElementById('resourceChart').getContext('2d');
+        const resourceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25'],
+                datasets: [{
+                    label: 'ICU Bed Usage',
+                    data: [12, 13, 15, 14, 15, 15],
+                    borderColor: '#28328c',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(40, 50, 140, 0.1)'
+                }, {
+                    label: 'Oxygen Usage',
+                    data: [45, 44, 42, 40, 38, 35],
+                    borderColor: '#dc2626',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#64748b' } }
+                },
+                scales: {
+                    y: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+                    x: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } }
+                }
+            }
+        });
+
+        // Sim Updates
+        setInterval(() => {
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric", second: "numeric" });
+            resourceChart.data.labels.shift();
+            resourceChart.data.datasets[0].data.shift();
+            resourceChart.data.datasets[1].data.shift();
+            resourceChart.data.labels.push(time);
+
+            const lastBed = resourceChart.data.datasets[0].data[resourceChart.data.datasets[0].data.length - 1];
+            const newBed = Math.max(0, Math.min(20, lastBed + (Math.random() > 0.5 ? 1 : -1)));
+            const lastOxy = resourceChart.data.datasets[1].data[resourceChart.data.datasets[1].data.length - 1];
+            const newOxy = Math.max(0, Math.min(50, lastOxy + (Math.random() > 0.5 ? 2 : -2)));
+
+            resourceChart.data.datasets[0].data.push(newBed);
+            resourceChart.data.datasets[1].data.push(newOxy);
+            resourceChart.update();
+
+            if (newOxy < 30) showToast(`Warning: Oxygen levels low (${newOxy})!`, 'error');
+        }, 3000);
+    }
+
+    function showToast(msg, type) {
+        const toast = document.createElement('div');
+        toast.innerText = msg;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.right = '20px';
+        toast.style.padding = '1rem 2rem';
+        toast.style.background = type === 'error' ? '#dc2626' : '#15803d';
+        toast.style.color = 'white';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        toast.style.zIndex = '1000';
+        toast.style.animation = 'fadeIn 0.5s';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+    }
+</script>
+{% endblock %}

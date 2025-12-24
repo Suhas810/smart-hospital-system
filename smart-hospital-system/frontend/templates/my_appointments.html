@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1 class="page-title" style="color: #1e293b; font-size: 1.8rem; margin: 0;">My Appointments</h1>
+        <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.2rem;">Manage your scheduled visits and consultations
+        </p>
+    </div>
+    <a href="/doctors" class="btn-primary"
+        style="padding: 0.6rem 1.2rem; text-decoration: none; background: #28328c; color: white; border-radius: 6px; font-weight: 600; font-size: 0.9rem;">
+        <i class="fas fa-plus"></i> Book New
+    </a>
+</div>
+
+{% if appointments %}
+<div class="card"
+    style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; padding: 0;">
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                <tr>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Patient</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Time Slot</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Priority</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Status</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Date</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">AI
+                        Report</th>
+                    <th style="padding: 1rem; text-align: left; color: #475569; font-weight: 600; font-size: 0.9rem;">
+                        Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 1rem; font-weight: 500; color: #1e293b;">{{ appt.name }}</td>
+                    <td style="padding: 1rem;">
+                        {% if appt.slot %}
+                        <span
+                            style="font-weight: 600; color: #0f172a; background: #f1f5f9; padding: 4px 8px; border-radius: 4px;">{{
+                            appt.slot }}</span>
+                        {% else %}
+                        <span style="color: #94a3b8;">-</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        <span
+                            style="font-weight: bold; color: {% if appt.severity > 7 %}#ef4444{% elif appt.severity > 4 %}#f59e0b{% else %}#10b981{% endif %};">
+                            {{ appt.severity }}/10
+                        </span>
+                    </td>
+                    <td style="padding: 1rem;">
+                        <span class="badge"
+                            style="padding: 4px 10px; border-radius: 20px; background: #e0f2fe; color: #0284c7; font-size: 0.8rem; font-weight: 600;">
+                            {{ appt.status }}
+                        </span>
+                    </td>
+                    <td style="padding: 1rem; color: #475569;">
+                        {{ appt.appointment_time[:10] }}
+                        <div style="font-size:0.8em; color:#94a3b8;">{{ appt.appointment_time[11:16] }}</div>
+                    </td>
+                    <td
+                        style="padding: 1rem; font-size: 0.85rem; color: #64748b; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {% if appt.risk_analysis %}
+                        {{ appt.risk_analysis[:50] }}...
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; gap: 8px;">
+                            <a href="/appointments/download/{{ appt.id }}" title="Download Report"
+                                style="color: #475569; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; transition: background 0.2s;">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                            <a href="/services/consult/room/{{ appt.id }}" title="Join Video Call"
+                                style="color: white; background: #28328c; padding: 6px 10px; border-radius: 4px; font-size: 0.9rem; transition: background 0.2s;">
+                                <i class="fas fa-video"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div
+    style="text-align: center; padding: 5rem 1rem; color: #94a3b8; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+    <div
+        style="width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+        <i class="fas fa-calendar-alt fa-2x" style="color: #cbd5e1;"></i>
+    </div>
+    <h3 style="color: #1e293b; margin-bottom: 0.5rem;">No appointments found</h3>
+    <p style="margin-bottom: 1.5rem;">You haven't booked any consultations yet.</p>
+    <a href="/doctors"
+        style="background: #28328c; color: white; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 6px; font-weight: 600;">Find
+        a Doctor</a>
+</div>
+{% endif %}
+{% endblock %}

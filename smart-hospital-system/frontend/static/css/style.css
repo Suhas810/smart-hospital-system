@@ -1,0 +1,974 @@
+:root {
+    --bg-app: #0f172a;
+    --bg-card: #1e293b;
+    --bg-input: #334155;
+
+    --primary: #0ea5e9;
+    /* Sky 500 */
+    --primary-hover: #0284c7;
+
+    --accent: #6366f1;
+    /* Indigo 500 */
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+    --bg-app: #020617;
+    --bg-card: #0f172a;
+    --bg-input: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+body.dark-mode .service-card {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+/* Redesign Components */
+
+/* Specialties Row */
+.specialties-section {
+    padding: 2rem 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 2rem;
+}
+
+.specialty-item {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    margin-right: 1.5rem;
+    vertical-align: top;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.specialty-item:hover {
+    transform: translateY(-5px);
+}
+
+.specialty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.specialty-label {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-weight: 500;
+    white-space: normal;
+}
+
+/* App Banner */
+.app-banner {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.app-content {
+    max-width: 50%;
+    z-index: 2;
+}
+
+.app-image-mockup {
+    width: 300px;
+    height: 400px;
+    background: #1e293b;
+    border-radius: 30px;
+    border: 8px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    transform: rotate(-5deg);
+    margin-right: 2rem;
+}
+
+body.dark-mode .app-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+/* Big Footer */
+.mega-footer {
+    background: #0f172a;
+    color: #f1f5f9;
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+    margin-left: -2rem;
+    /* Hack to stretch full width in container */
+    margin-right: -2rem;
+    margin-bottom: -2rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col h4 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.footer-col a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.hover-scale {
+    transition: transform 0.2s;
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    display: flex;
+    min-height: 100vh;
+}
+
+
+
+/* Light Dashboard Sidebar */
+.sidebar {
+    width: 260px;
+    background-color: #fff;
+    border-right: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    color: #28328c;
+    /* Practo Blue */
+}
+
+.nav-item {
+    color: #475569;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: #f1f5f9;
+    color: #28328c;
+    font-weight: 600;
+}
+
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Grid Layouts */
+.grid-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.grid-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .grid-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid #334155;
+}
+
+.stat-card h3 {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-value.danger {
+    color: var(--danger);
+}
+
+.stat-value.warning {
+    color: var(--warning);
+}
+
+.stat-value.success {
+    color: var(--success);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--bg-input);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    color: white;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+}
+
+th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* AI Elements */
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #e0e7ff;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.ai-pulse {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+.ai-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--accent);
+    display: none;
+    /* Hidden by default */
+}
+
+/* Chatbot Styles */
+#chat-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    pointer-events: none;
+    /* Let clicks pass through container area unless hitting children */
+}
+
+#chat-toggle {
+    pointer-events: auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+    font-size: 1.5rem;
+    display: flex;
+    /* Center icon */
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    float: right;
+}
+
+#chat-toggle:hover {
+    transform: scale(1.1);
+}
+
+#chat-window {
+    pointer-events: auto;
+    width: 350px;
+    height: 450px;
+    background: var(--bg-card);
+    border: 1px solid #334155;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 20px;
+    /* Space above toggle button if stacked, or positioning needs check */
+    /* Position absolute relative to the fixed widget container? 
+       Actually, let's just stack them. */
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.chat-header {
+    background: var(--bg-input);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    border-bottom: 1px solid #334155;
+}
+
+#chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #0f172a;
+}
+
+.msg {
+    max-width: 80%;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.msg.ai {
+    background: var(--bg-input);
+    color: var(--text-main);
+    align-self: flex-start;
+    border-top-left-radius: 2px;
+}
+
+.msg.user {
+    background: var(--primary);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.msg.typing {
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.chat-input-area {
+    padding: 1rem;
+    background: var(--bg-card);
+    border-top: 1px solid #334155;
+    display: flex;
+    gap: 10px;
+}
+
+/* Landing Page Specific Styles */
+.landing-body {
+    background: white;
+    color: #333;
+    display: block !important;
+    /* Fix for the flex layout bug */
+    height: auto !important;
+}
+
+.landing-body .sidebar,
+.landing-body header.header {
+    display: none;
+    /* Ensure no dashboard sidebar/header leaks */
+}
+
+/* Practo Specific Styles */
+.practo-header {
+    background: #fff;
+    border-bottom: 1px solid #f0f0f5;
+    padding: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.practo-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    /* Or Practo Blue #28328c */
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.practo-nav {
+    display: flex;
+    gap: 2rem;
+    margin-left: 3rem;
+    flex-grow: 1;
+}
+
+.p-nav-link {
+    text-decoration: none;
+    color: #414146;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 24px 0;
+    position: relative;
+    border-bottom: 3px solid transparent;
+}
+
+.p-nav-link:hover {
+    color: #28328c;
+    border-bottom-color: #28328c;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #787887;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-right {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.btn-login {
+    border: 1px solid #d3d3d3;
+    color: #787887;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-login:hover {
+    border-color: #28328c;
+    color: #28328c;
+}
+
+/* Practo Hero */
+.practo-hero {
+    padding: 4rem 0 6rem;
+    text-align: center;
+    background: #fff;
+}
+
+.hero-title {
+    font-size: 2.75rem;
+    font-weight: 500;
+    color: #2d2d32;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: #787887;
+    margin-bottom: 3rem;
+}
+
+/* Practo Search Bar */
+.search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    height: 55px;
+    /* Fixed height for better alignment */
+}
+
+.search-box-location {
+    flex: 0 0 300px;
+    border-right: 1px solid #eee;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.search-box-query {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #414146;
+    margin-left: 10px;
+}
+
+.search-icon {
+    color: #787887;
+    font-size: 1.1rem;
+}
+
+/* Updated Practo Service Cards (Hero Grid) */
+.services-grid-practo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* Responsive */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 0 1rem;
+}
+
+.p-card {
+    background: #fff;
+    border-radius: 20px;
+    /* More rounded */
+    padding: 0;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    /* Light shadow initially */
+    border: 1px solid #f0f0f5;
+    height: 100%;
+}
+
+.p-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.p-card-img {
+    height: 180px;
+    /* Taller images */
+    background: #f0f8ff;
+    display: flex;
+    align-items: flex-end;
+    /* Align image to bottom usually */
+    justify-content: center;
+    overflow: hidden;
+}
+
+.p-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.p-card-content {
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.p-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d2d32;
+    margin-bottom: 0.5rem;
+}
+
+.p-card-desc {
+    font-size: 0.9rem;
+    color: #787887;
+    line-height: 1.4;
+}
+
+/* Consult Section (Circles) */
+.consult-section {
+    padding: 4rem 1rem;
+    background: white;
+    text-align: center;
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #2d2d32;
+    font-weight: 600;
+    margin: 0;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: #787887;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.btn-view-all {
+    color: #28328c;
+    border: 1px solid #28328c;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-view-all:hover {
+    background: #f0f0f5;
+}
+
+.consult-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.consult-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.consult-img-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid #f0f0f5;
+    transition: transform 0.2s;
+}
+
+.consult-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.consult-item:hover .consult-img-wrapper {
+    transform: scale(1.05);
+}
+
+.consult-label {
+    font-size: 0.95rem;
+    color: #414146;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.link-consult-now {
+    font-size: 0.8rem;
+    color: #0ea5e9;
+    /* Sky blue */
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* In-Clinic Section */
+.clinic-section {
+    padding: 4rem 1rem;
+    background: #fff;
+    border-top: 1px solid #f0f0f5;
+}
+
+.clinic-slider {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding-bottom: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.clinic-card {
+    min-width: 280px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    border: 1px solid #f0f0f5;
+}
+
+.clinic-img {
+    height: 180px;
+    background: #eee;
+}
+
+.clinic-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.clinic-content {
+    padding: 1rem;
+}
+
+.clinic-title {
+    font-size: 1.1rem;
+    color: #2d2d32;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.clinic-desc {
+    font-size: 0.9rem;
+    color: #787887;
+}
+
+/* Auth Pages */
+.auth-body {
+    background: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-title {
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #374151;
+    transition: border-color 0.15s;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-auth {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.btn-auth:hover {
+    background: #1d4ed8;
+}
+
+.auth-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.auth-links a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+```
