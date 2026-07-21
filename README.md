@@ -151,24 +151,6 @@ This project helped me learn:
 
 ---
 
-# 📸 Screenshots
-
-> Add screenshots here.
-
-Example:
-
-```
-screenshots/
-├── home.png
-├── dashboard.png
-├── login.png
-├── doctors.png
-├── patients.png
-└── appointments.png
-```
-
----
-
 # 🚀 Future Improvements
 
 This project has many possibilities for future development.
